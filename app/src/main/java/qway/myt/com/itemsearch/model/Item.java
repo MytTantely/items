@@ -72,22 +72,22 @@ public class Item {
         }
     }
 
-    // Decodes array of book json results into business model objects
+    // Decodes array of item json results into business model objects
     public static ArrayList<Item> fromJson(JSONArray jsonArray) {
         ArrayList<Item> items = new ArrayList<Item>(jsonArray.length());
         // Process each result in json array, decode and convert to business
         // object
         for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject bookJson = null;
+            JSONObject itemJson = null;
             try {
-                bookJson = jsonArray.getJSONObject(i);
+                itemJson = jsonArray.getJSONObject(i);
             } catch (Exception e) {
                 e.printStackTrace();
                 continue;
             }
-            Item book = Item.fromJson(bookJson);
-            if (book != null) {
-                items.add(book);
+            Item item = Item.fromJson(itemJson);
+            if (item != null) {
+                items.add(item);
             }
         }
         return items;

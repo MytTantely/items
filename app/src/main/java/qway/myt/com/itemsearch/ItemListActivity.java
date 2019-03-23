@@ -1,8 +1,15 @@
 package qway.myt.com.itemsearch;
 
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
+
+import android.support.v4.view.MenuItemCompat;
+//import android.support.v7.app.ActionBarActivity;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -33,14 +40,14 @@ public class ItemListActivity extends AppCompatActivity {
         lvBooks.setAdapter(itemAdapter);
 
         // Fetch the data remotely
-        fetchBooks();
+        fetchBooks("lord of the rings");
     }
 
     // Executes an API call to the OpenLibrary search endpoint, parses the results
     // Converts them into an array of book objects and adds them to the adapter
-    private void fetchBooks() {
+    private void fetchBooks(String query) {
         client = new ItemClient();
-        client.getItems("oscar Wilde", new JsonHttpResponseHandler() {
+        client.getItems(query, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -64,5 +71,34 @@ public class ItemListActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_item_list, menu);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Fetch the data remotely
+                fetchBooks(query);
+                // Reset SearchView
+                searchView.clearFocus();
+                searchView.setQuery("", false);
+                searchView.setIconified(true);
+                searchItem.collapseActionView();
+                // Set activity title to search query
+                ItemListActivity.this.setTitle(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+        return true;
     }
 }

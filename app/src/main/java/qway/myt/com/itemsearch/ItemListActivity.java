@@ -44,7 +44,7 @@ public class ItemListActivity extends AppCompatActivity {
         progress = (ProgressBar) findViewById(R.id.progress);
 
         // Fetch the data remotely
-//        fetchBooks("lord of the rings");
+        // fetchBooks("lord of the rings");
 
 
     }

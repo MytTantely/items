@@ -7,9 +7,10 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-
+import android.widget.ProgressBar;
 import android.support.v4.view.MenuItemCompat;
 //import android.support.v7.app.ActionBarActivity;
+
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -28,6 +29,7 @@ public class ItemListActivity extends AppCompatActivity {
     private ListView lvBooks;
     private ItemAdapter itemAdapter;
     private ItemClient client;
+    private ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +41,31 @@ public class ItemListActivity extends AppCompatActivity {
         itemAdapter = new ItemAdapter(this, aBooks);
         lvBooks.setAdapter(itemAdapter);
 
+        progress = (ProgressBar) findViewById(R.id.progress);
+
         // Fetch the data remotely
-        fetchBooks("lord of the rings");
+//        fetchBooks("lord of the rings");
+
+
     }
 
     // Executes an API call to the OpenLibrary search endpoint, parses the results
     // Converts them into an array of book objects and adds them to the adapter
     private void fetchBooks(String query) {
+
+        // Show progress bar before making network request
+        progress.setVisibility(ProgressBar.VISIBLE);
+
+
         client = new ItemClient();
         client.getItems(query, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
+
+                    // hide progress bar
+                    progress.setVisibility(ProgressBar.GONE);
+
                     JSONArray docs = null;
                     if(response != null) {
                         // Get the docs json array
@@ -69,6 +84,11 @@ public class ItemListActivity extends AppCompatActivity {
                     // Invalid JSON format, show appropriate error.
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                progress.setVisibility(ProgressBar.GONE);
             }
         });
     }

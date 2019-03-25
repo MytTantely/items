@@ -1,11 +1,14 @@
 package qway.myt.com.itemsearch;
 
+import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.support.v4.view.MenuItemCompat;
@@ -26,6 +29,9 @@ import qway.myt.com.itemsearch.model.ItemAdapter;
 import qway.myt.com.itemsearch.model.ItemClient;
 
 public class ItemListActivity extends AppCompatActivity {
+
+    public static final String BOOK_DETAIL_KEY = "book";
+
     private ListView lvBooks;
     private ItemAdapter itemAdapter;
     private ItemClient client;
@@ -46,7 +52,20 @@ public class ItemListActivity extends AppCompatActivity {
         // Fetch the data remotely
         // fetchBooks("lord of the rings");
 
+        setupBookSelectedListener();
 
+    }
+
+    private void setupBookSelectedListener() {
+        lvBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Launch the detail view passing book as an extra
+                Intent intent = new Intent(ItemListActivity.this, MapsActivity.class);
+//                intent.putExtra(BOOK_DETAIL_KEY, itemAdapter.getItem(position));
+                startActivity(intent);
+            }
+        });
     }
 
     // Executes an API call to the OpenLibrary search endpoint, parses the results

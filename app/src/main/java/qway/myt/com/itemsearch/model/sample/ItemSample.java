@@ -4,11 +4,15 @@ public class ItemSample {
     private String name;
     private String category;
     private Double price;
+    private String label;
 
-    public String getLabel() {
-        return category + " - " + name;
+    private void setLabel(String category, String name){
+        this.label = category + " - " + name;
     }
 
+    public String getLabel() {
+        return this.label;
+    }
     public String getName() {
         return name;
     }
@@ -48,6 +52,7 @@ public class ItemSample {
         this.category = category;
         this.price = price;
         this.onSale = null;
+        this.setLabel(this.category, this.name);
     }
 
     public ItemSample (String name, String category, Double price, Sale onSale){
@@ -55,5 +60,6 @@ public class ItemSample {
         this.category = category;
         this.price = price;
         this.onSale = onSale;
+        this.setLabel(this.category, this.name);
     }
 }

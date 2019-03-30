@@ -47,7 +47,7 @@ public class ItemSampleAdapter extends ArrayAdapter<ItemSample> {
         }
 
 // Populate the data into the template view using the data object
-        viewHolder.category.setText(itemSample.getCategory());
+        viewHolder.category.setText(itemSample.getLabel());
         viewHolder.price.setText(itemSample.getPrice().toString());
 
         return convertView;

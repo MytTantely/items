@@ -31,6 +31,9 @@ import cz.msebera.android.httpclient.Header;
 import qway.myt.com.itemsearch.model.Item;
 import qway.myt.com.itemsearch.model.ItemAdapter;
 import qway.myt.com.itemsearch.model.ItemClient;
+import qway.myt.com.itemsearch.model.sample.ItemSample;
+import qway.myt.com.itemsearch.model.sample.ItemSampleAdapter;
+import qway.myt.com.itemsearch.model.sample.ItemSampleFactory;
 
 public class ItemListActivity extends AppCompatActivity {
 
@@ -40,7 +43,7 @@ public class ItemListActivity extends AppCompatActivity {
     public static final String BOOK_DETAIL_KEY = "book";
 
     private ListView lvBooks;
-    private ItemAdapter itemAdapter;
+    private ItemSampleAdapter itemSampleAdapter;
     private ItemClient client;
     private ProgressBar progress;
 
@@ -50,9 +53,9 @@ public class ItemListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item_list);
 
         lvBooks = (ListView) findViewById(R.id.lvBooks);
-        ArrayList<Item> aBooks = new ArrayList<Item>();
-        itemAdapter = new ItemAdapter(this, aBooks);
-        lvBooks.setAdapter(itemAdapter);
+        ArrayList<ItemSample> aBooks = new ArrayList<ItemSample>();
+        itemSampleAdapter = new ItemSampleAdapter(this, aBooks);
+        lvBooks.setAdapter(itemSampleAdapter);
 
         progress = (ProgressBar) findViewById(R.id.progress);
 
@@ -77,47 +80,47 @@ public class ItemListActivity extends AppCompatActivity {
 
     // Executes an API call to the OpenLibrary search endpoint, parses the results
     // Converts them into an array of book objects and adds them to the adapter
-    private void fetchBooks(String query) {
-
-        // Show progress bar before making network request
-        progress.setVisibility(ProgressBar.VISIBLE);
-
-
-        client = new ItemClient();
-        client.getItems(query, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-
-                    // hide progress bar
-                    progress.setVisibility(ProgressBar.GONE);
-
-                    JSONArray docs = null;
-                    if (response != null) {
-                        // Get the docs json array
-                        docs = response.getJSONArray("docs");
-                        // Parse json array into array of model objects
-                        final ArrayList<Item> books = Item.fromJson(docs);
-                        // Remove all books from the adapter
-                        itemAdapter.clear();
-                        // Load model objects into the adapter
-                        for (Item book : books) {
-                            itemAdapter.add(book); // add book through the adapter
-                        }
-                        itemAdapter.notifyDataSetChanged();
-                    }
-                } catch (JSONException e) {
-                    // Invalid JSON format, show appropriate error.
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                progress.setVisibility(ProgressBar.GONE);
-            }
-        });
-    }
+//    private void fetchBooks(String query) {
+//
+//        // Show progress bar before making network request
+//        progress.setVisibility(ProgressBar.VISIBLE);
+//
+//
+//        client = new ItemClient();
+//        client.getItems(query, new JsonHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                try {
+//
+//                    // hide progress bar
+//                    progress.setVisibility(ProgressBar.GONE);
+//
+//                    JSONArray docs = null;
+//                    if (response != null) {
+//                        // Get the docs json array
+//                        docs = response.getJSONArray("docs");
+//                        // Parse json array into array of model objects
+//                        final ArrayList<Item> books = Item.fromJson(docs);
+//                        // Remove all books from the adapter
+//                        itemSampleAdapter.clear();
+//                        // Load model objects into the adapter
+//                        for (ItemSample book : books) {
+//                            itemSampleAdapter.add(book); // add book through the adapter
+//                        }
+//                        itemSampleAdapter.notifyDataSetChanged();
+//                    }
+//                } catch (JSONException e) {
+//                    // Invalid JSON format, show appropriate error.
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+//                progress.setVisibility(ProgressBar.GONE);
+//            }
+//        });
+//    }
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -154,9 +157,9 @@ public class ItemListActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Fetch the data remotely
-                fetchBooks(query);
+//                fetchBooks(query);
                 // Reset SearchView
-//                fetchApple(); FIXME
+                fetchApple(); //FIXME
                 searchView.clearFocus();
                 searchView.setQuery("", false);
                 searchView.setIconified(true);
@@ -174,20 +177,21 @@ public class ItemListActivity extends AppCompatActivity {
         return true;
     }
 
-//    private void fetchApple() {
-//        // Show progress bar before making network request
-//        progress.setVisibility(ProgressBar.VISIBLE);
-//
-//        progress.setVisibility(ProgressBar.GONE);
-//
+    private void fetchApple() {
+        // Show progress bar before making network request
+        progress.setVisibility(ProgressBar.VISIBLE);
+
+        progress.setVisibility(ProgressBar.GONE);
+
 //        final ArrayList<Item> books = Item.fromJson(docs);
-//        // Remove all books from the adapter
-//        itemAdapter.clear();
-//        // Load model objects into the adapter
-//        for (Item book : books) {
-//            itemAdapter.add(book); // add book through the adapter
-//        }
-//        itemAdapter.notifyDataSetChanged();
-//
-//    }
+        final ArrayList<ItemSample> books = ItemSampleFactory.getInstance().getItems();
+        // Remove all books from the adapter
+        itemSampleAdapter.clear();
+        // Load model objects into the adapter
+        for (ItemSample book : books) {
+            itemSampleAdapter.add(book); // add book through the adapter
+        }
+        itemSampleAdapter.notifyDataSetChanged();
+
+    }
 }

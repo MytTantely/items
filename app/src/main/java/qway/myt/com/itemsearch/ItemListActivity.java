@@ -131,11 +131,11 @@ public class ItemListActivity extends AppCompatActivity {
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
         mSearchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-//        mSearchAutoComplete.setDropDownBackgroundResource(R.drawable.common_google_signin_btn_text_light_normal_background);
-//        mSearchAutoComplete.setDropDownAnchor(R.id.action_search);
-//        mSearchAutoComplete.setThreshold(0);
-        mSearchAutoComplete.setBackgroundColor(Color.BLUE);
-        mSearchAutoComplete.setTextColor(Color.GREEN);
+        mSearchAutoComplete.setDropDownBackgroundResource(R.drawable.common_google_signin_btn_text_light_normal_background);
+        mSearchAutoComplete.setDropDownAnchor(R.id.action_search);
+        mSearchAutoComplete.setThreshold(0);
+//        mSearchAutoComplete.setBackgroundColor(Color.BLUE);
+//        mSearchAutoComplete.setTextColor(Color.GREEN);
         mSearchAutoComplete.setDropDownBackgroundResource(android.R.color.holo_blue_light);
 
 // FIXME, missing:

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class ItemSampleAdapter extends ArrayAdapter<ItemSample> {
             viewHolder = new ItemSampleAdapter.ViewHolder();
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.details_item, parent, false);
-//            viewHolder.name = (TextView) convertView.findViewById(R.id.ivBookCover);
+//            viewHolder.name = (ImageView) convertView.findViewById(R.id.ivBookCover);
             viewHolder.category = (TextView) convertView.findViewById(R.id.tvTitle);
             viewHolder.price = (TextView) convertView.findViewById(R.id.tvAuthor);
             convertView.setTag(viewHolder);

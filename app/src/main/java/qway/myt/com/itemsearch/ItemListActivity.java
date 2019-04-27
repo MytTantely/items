@@ -2,10 +2,11 @@ package qway.myt.com.itemsearch;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,24 +16,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.support.v4.view.MenuItemCompat;
 //import android.support.v7.app.ActionBarActivity;
 
 
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
-import qway.myt.com.itemsearch.model.Item;
-import qway.myt.com.itemsearch.model.ItemAdapter;
+import qway.myt.com.itemsearch.model.FruitAdapter;
 import qway.myt.com.itemsearch.model.ItemClient;
 import qway.myt.com.itemsearch.model.sample.ItemSample;
-import qway.myt.com.itemsearch.model.sample.ItemSampleAdapter;
 import qway.myt.com.itemsearch.model.sample.ItemSampleFactory;
 
 public class ItemListActivity extends AppCompatActivity {
@@ -43,27 +35,42 @@ public class ItemListActivity extends AppCompatActivity {
     public static final String BOOK_DETAIL_KEY = "book";
 
     private ListView lvBooks;
-    private ItemSampleAdapter itemSampleAdapter;
+//    private ItemSampleAdapter itemSampleAdapter;
+    private FruitAdapter mFruitAdapter;
     private ItemClient client;
     private ProgressBar progress;
+
+    private RecyclerView recList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-        lvBooks = (ListView) findViewById(R.id.lvBooks);
-        ArrayList<ItemSample> aBooks = new ArrayList<ItemSample>();
-        itemSampleAdapter = new ItemSampleAdapter(this, aBooks);
-        lvBooks.setAdapter(itemSampleAdapter);
+        recList = (RecyclerView) findViewById(R.id.cardList);
+        recList.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recList.setLayoutManager(llm);
+
+
+
+//        lvBooks = (ListView) findViewById(R.id.lvBooks);
+//        ArrayList<ItemSample> aBooks = new ArrayList<ItemSample>();
+//        itemSampleAdapter = new ItemSampleAdapter(this, aBooks);
+//        lvBooks.setAdapter(itemSampleAdapter);
 
         progress = (ProgressBar) findViewById(R.id.progress);
 
         // Fetch the data remotely
         // fetchBooks("lord of the rings");
 
-        setupBookSelectedListener();
+        //setupBookSelectedListener();
 
+    }
+
+    private List<ItemSample> getFruits() {
+        return ItemSampleFactory.getInstance().getItems();
     }
 
     private void setupBookSelectedListener() {
@@ -183,15 +190,20 @@ public class ItemListActivity extends AppCompatActivity {
 
         progress.setVisibility(ProgressBar.GONE);
 
-//        final ArrayList<Item> books = Item.fromJson(docs);
-        final ArrayList<ItemSample> books = ItemSampleFactory.getInstance().getItems();
+        final ArrayList<ItemSample> fruits = ItemSampleFactory.getInstance().getItems();
+        mFruitAdapter = new FruitAdapter(fruits);
+        mFruitAdapter.notifyDataSetChanged();
+
+        mFruitAdapter = new FruitAdapter(getFruits());
+        recList.setAdapter(mFruitAdapter);
         // Remove all books from the adapter
-        itemSampleAdapter.clear();
+//        itemSampleAdapter.clear();
         // Load model objects into the adapter
-        for (ItemSample book : books) {
-            itemSampleAdapter.add(book); // add book through the adapter
-        }
-        itemSampleAdapter.notifyDataSetChanged();
+//        for (ItemSample book : books) {
+//            itemSampleAdapter.add(book); // add book through the adapter
+//        }
+//        itemSampleAdapter.notifyDataSetChanged();
+
 
     }
 }

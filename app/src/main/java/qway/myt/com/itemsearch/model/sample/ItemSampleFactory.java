@@ -41,6 +41,9 @@ public class ItemSampleFactory {
     }
 
     public ArrayList<ItemSample> getItems(){
+        if(mItemSamples.size() == 0){
+            makeItems();
+        }
         return mItemSamples;
     }
 

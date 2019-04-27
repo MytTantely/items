@@ -15,10 +15,16 @@
         android:indeterminate="true"
         android:visibility="gone" />
 
-    <ListView
+    <!--ListView
         android:id="@+id/lvBooks"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" /-->
 
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cardList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>

@@ -45,10 +45,14 @@ public class ItemListActivity extends AppCompatActivity {
 
     private RecyclerView recList;
 
+    private List shoppingList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+
+        shoppingList = new ArrayList<ItemSample>();
 
         recList = (RecyclerView) findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
@@ -203,12 +207,16 @@ public class ItemListActivity extends AppCompatActivity {
         recList.addOnItemTouchListener(new RecyclerItemListener(getApplicationContext(), recList,
                 new RecyclerItemListener.RecyclerTouchListener() {
                     public void onClickItem(View v, int position) {
-                        Toast toast = Toast.makeText(v.getContext(), getFruits().get(position).getLabel(), Toast.LENGTH_LONG);
-                        toast.show();
-                        getFruits().remove(position);
+
+//                        getFruits().remove(position);
 
                         TextView label = v.findViewById(R.id.txtLabel);
                         label.setText("Added");
+
+                        shoppingList.add(getFruits().get(position));
+
+                        Toast toast = Toast.makeText(v.getContext(), "Shopping list: " + shoppingList.size(), Toast.LENGTH_LONG);
+                        toast.show();
                     }
 
                     public void onLongClickItem(View v, int position) {

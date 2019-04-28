@@ -16,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 //import android.support.v7.app.ActionBarActivity;
 
@@ -204,7 +205,10 @@ public class ItemListActivity extends AppCompatActivity {
                     public void onClickItem(View v, int position) {
                         Toast toast = Toast.makeText(v.getContext(), getFruits().get(position).getLabel(), Toast.LENGTH_LONG);
                         toast.show();
+                        getFruits().remove(position);
 
+                        TextView label = v.findViewById(R.id.txtLabel);
+                        label.setText("Added");
                     }
 
                     public void onLongClickItem(View v, int position) {

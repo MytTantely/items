@@ -202,8 +202,9 @@ public class ItemListActivity extends AppCompatActivity {
         recList.addOnItemTouchListener(new RecyclerItemListener(getApplicationContext(), recList,
                 new RecyclerItemListener.RecyclerTouchListener() {
                     public void onClickItem(View v, int position) {
-                        Toast toast = Toast.makeText(v.getContext(), "i" + position, Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(v.getContext(), getFruits().get(position).getLabel(), Toast.LENGTH_LONG);
                         toast.show();
+
                     }
 
                     public void onLongClickItem(View v, int position) {

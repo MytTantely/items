@@ -16,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 //import android.support.v7.app.ActionBarActivity;
 
 
@@ -26,6 +27,7 @@ import qway.myt.com.itemsearch.model.FruitAdapter;
 import qway.myt.com.itemsearch.model.ItemClient;
 import qway.myt.com.itemsearch.model.sample.ItemSample;
 import qway.myt.com.itemsearch.model.sample.ItemSampleFactory;
+import qway.myt.com.itemsearch.utils.RecyclerItemListener;
 
 public class ItemListActivity extends AppCompatActivity {
 
@@ -196,6 +198,18 @@ public class ItemListActivity extends AppCompatActivity {
 
         mFruitAdapter = new FruitAdapter(getFruits());
         recList.setAdapter(mFruitAdapter);
+
+        recList.addOnItemTouchListener(new RecyclerItemListener(getApplicationContext(), recList,
+                new RecyclerItemListener.RecyclerTouchListener() {
+                    public void onClickItem(View v, int position) {
+                        Toast toast = Toast.makeText(v.getContext(), "i" + position, Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+
+                    public void onLongClickItem(View v, int position) {
+                        System.out.println("On Long Click Item interface");
+                    }
+                }));
         // Remove all books from the adapter
 //        itemSampleAdapter.clear();
         // Load model objects into the adapter

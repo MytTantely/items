@@ -80,6 +80,8 @@ public class ItemListActivity extends AppCompatActivity {
 
         //setupBookSelectedListener();
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();
+
         toolbar = getSupportActionBar();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

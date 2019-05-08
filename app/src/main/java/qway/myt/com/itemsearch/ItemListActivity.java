@@ -36,16 +36,16 @@ import qway.myt.com.itemsearch.utils.RecyclerItemListener;
 
 public class ItemListActivity extends AppCompatActivity {
 
-    private SearchView.SearchAutoComplete mSearchAutoComplete;
-    private String[] fruits = {"Apple - computer", "Apple - juice", "Apple - fruit", "Apple - seeds", "Appy", "Banana", "Cherry", "Date", "Grape", "Kiwi", "Mango", "Pear"};
+//    private SearchView.SearchAutoComplete mSearchAutoComplete;
+//    private String[] fruits = {"Apple - computer", "Apple - juice", "Apple - fruit", "Apple - seeds", "Appy", "Banana", "Cherry", "Date", "Grape", "Kiwi", "Mango", "Pear"};
 
     public static final String BOOK_DETAIL_KEY = "book";
 
     private ListView lvBooks;
 //    private ItemSampleAdapter itemSampleAdapter;
-    private FruitAdapter mFruitAdapter;
+//    private FruitAdapter mFruitAdapter;
     private ItemClient client;
-    private ProgressBar progress;
+//    private ProgressBar progress;
 
     private RecyclerView recList;
 
@@ -73,7 +73,7 @@ public class ItemListActivity extends AppCompatActivity {
 //        itemSampleAdapter = new ItemSampleAdapter(this, aBooks);
 //        lvBooks.setAdapter(itemSampleAdapter);
 
-       // progress = (ProgressBar) findViewById(R.id.progress);
+//        progress = (ProgressBar) findViewById(R.id.progress);
 
         // Fetch the data remotely
         // fetchBooks("lord of the rings");
@@ -173,101 +173,102 @@ public class ItemListActivity extends AppCompatActivity {
 //        });
 //    }
 
-    @SuppressLint("RestrictedApi")
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_item_list, menu);
-        final MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+//    @SuppressLint("RestrictedApi")
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_item_list, menu);
+//        final MenuItem searchItem = menu.findItem(R.id.action_search);
+//        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+//
+//        mSearchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+//        mSearchAutoComplete.setDropDownBackgroundResource(R.drawable.common_google_signin_btn_text_light_normal_background);
+//        mSearchAutoComplete.setDropDownAnchor(R.id.action_search);
+//        mSearchAutoComplete.setThreshold(0);
+////        mSearchAutoComplete.setBackgroundColor(Color.BLUE);
+////        mSearchAutoComplete.setTextColor(Color.GREEN);
+//        mSearchAutoComplete.setDropDownBackgroundResource(android.R.color.holo_blue_light);
+//
+//// FIXME, missing:
+//        // Listen to search view item on click event.
+////        searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fruits);
+//        mSearchAutoComplete.setAdapter(adapter);
+//        mSearchAutoComplete.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String queryString = (String) parent.getItemAtPosition(position);
+//                mSearchAutoComplete.setText("" + queryString);
+//            }
+//        });
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                // Fetch the data remotely
+////                fetchBooks(query);
+//                // Reset SearchView
+//                fetchApple(); //FIXME
+//                searchView.clearFocus();
+//                searchView.setQuery("", false);
+//                searchView.setIconified(true);
+//                searchItem.collapseActionView();
+//                // Set activity title to search query
+//                ItemListActivity.this.setTitle(query);
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                return false;
+//            }
+//        });
+//        return true;
+//    }
 
-        mSearchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        mSearchAutoComplete.setDropDownBackgroundResource(R.drawable.common_google_signin_btn_text_light_normal_background);
-        mSearchAutoComplete.setDropDownAnchor(R.id.action_search);
-        mSearchAutoComplete.setThreshold(0);
-//        mSearchAutoComplete.setBackgroundColor(Color.BLUE);
-//        mSearchAutoComplete.setTextColor(Color.GREEN);
-        mSearchAutoComplete.setDropDownBackgroundResource(android.R.color.holo_blue_light);
-
-// FIXME, missing:
-        // Listen to search view item on click event.
-//        searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fruits);
-        mSearchAutoComplete.setAdapter(adapter);
-        mSearchAutoComplete.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String queryString = (String) parent.getItemAtPosition(position);
-                mSearchAutoComplete.setText("" + queryString);
-            }
-        });
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // Fetch the data remotely
-//                fetchBooks(query);
-                // Reset SearchView
-                fetchApple(); //FIXME
-                searchView.clearFocus();
-                searchView.setQuery("", false);
-                searchView.setIconified(true);
-                searchItem.collapseActionView();
-                // Set activity title to search query
-                ItemListActivity.this.setTitle(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-        return true;
-    }
-
-    private void fetchApple() {
-        // Show progress bar before making network request
-        progress.setVisibility(ProgressBar.VISIBLE);
-
-        progress.setVisibility(ProgressBar.GONE);
-
-        final ArrayList<ItemSample> fruits = ItemSampleFactory.getInstance().getItems();
-        mFruitAdapter = new FruitAdapter(fruits);
-        mFruitAdapter.notifyDataSetChanged();
-
-        mFruitAdapter = new FruitAdapter(getFruits());
-        recList.setAdapter(mFruitAdapter);
-
-        recList.addOnItemTouchListener(new RecyclerItemListener(getApplicationContext(), recList,
-                new RecyclerItemListener.RecyclerTouchListener() {
-                    public void onClickItem(View v, int position) {
-
-//                        getFruits().remove(position);
-
-                        TextView label = v.findViewById(R.id.txtLabel);
-                        label.setText("Added");
-
-                        shoppingList.add(getFruits().get(position));
-
-                        Toast toast = Toast.makeText(v.getContext(), "Shopping list: " + shoppingList.size(), Toast.LENGTH_LONG);
-                        toast.show();
-                    }
-
-                    public void onLongClickItem(View v, int position) {
-                        System.out.println("On Long Click Item interface");
-                    }
-                }));
-        // Remove all books from the adapter
-//        itemSampleAdapter.clear();
-        // Load model objects into the adapter
-//        for (ItemSample book : books) {
-//            itemSampleAdapter.add(book); // add book through the adapter
-//        }
-//        itemSampleAdapter.notifyDataSetChanged();
-
-
-    }
+//    private void fetchApple() {
+//        // Show progress bar before making network request
+//        progress.setVisibility(ProgressBar.VISIBLE);
+//
+//        progress.setVisibility(ProgressBar.GONE);
+//
+//        final ArrayList<ItemSample> fruits = ItemSampleFactory.getInstance().getItems();
+//        mFruitAdapter = new FruitAdapter(fruits);
+//        mFruitAdapter.notifyDataSetChanged();
+//
+//        mFruitAdapter = new FruitAdapter(getFruits());
+//        recList.setAdapter(mFruitAdapter);  // FIXME     java.lang.NullPointerException: Attempt to invoke virtual method 'void android.support.v7.widget.RecyclerView.setAdapter(android.support.v7.widget.RecyclerView$Adapter)' on a null object reference
+//                                            // FIXME move all search view logic into Fragments.
+//
+//        recList.addOnItemTouchListener(new RecyclerItemListener(getApplicationContext(), recList,
+//                new RecyclerItemListener.RecyclerTouchListener() {
+//                    public void onClickItem(View v, int position) {
+//
+////                        getFruits().remove(position);
+//
+//                        TextView label = v.findViewById(R.id.txtLabel);
+//                        label.setText("Added");
+//
+//                        shoppingList.add(getFruits().get(position));
+//
+//                        Toast toast = Toast.makeText(v.getContext(), "Shopping list: " + shoppingList.size(), Toast.LENGTH_LONG);
+//                        toast.show();
+//                    }
+//
+//                    public void onLongClickItem(View v, int position) {
+//                        System.out.println("On Long Click Item interface");
+//                    }
+//                }));
+//        // Remove all books from the adapter
+////        itemSampleAdapter.clear();
+//        // Load model objects into the adapter
+////        for (ItemSample book : books) {
+////            itemSampleAdapter.add(book); // add book through the adapter
+////        }
+////        itemSampleAdapter.notifyDataSetChanged();
+//
+//
+//    }
 }

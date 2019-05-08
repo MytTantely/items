@@ -38,32 +38,28 @@ public class SearchFragment extends Fragment {
 
     private FruitAdapter mFruitAdapter;
 
-    private ProgressBar progress;
+//    private ProgressBar progress;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         setHasOptionsMenu(true);
 
-        progress = (ProgressBar) v.findViewById(R.id.progress);
+//        progress = (ProgressBar) v.findViewById(R.id.progress);
 
         recList = (RecyclerView) v.findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(v.getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-
 
         return v;
 
@@ -126,9 +122,9 @@ public class SearchFragment extends Fragment {
 
     private void fetchApple() {
         // Show progress bar before making network request
-        progress.setVisibility(ProgressBar.VISIBLE);
+        // progress.setVisibility(ProgressBar.VISIBLE);
 
-        progress.setVisibility(ProgressBar.GONE);
+        // progress.setVisibility(ProgressBar.GONE);
 
         final ArrayList<ItemSample> fruits = ItemSampleFactory.getInstance().getItems();
         mFruitAdapter = new FruitAdapter(fruits);

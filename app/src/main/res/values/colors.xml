@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="bkg_card">#00574B</color>
     <color name="bgBottomNavigation">#fe485a</color>
+    <color name="InactiveBottomNavIconColor">#413d3e</color>
 </resources>

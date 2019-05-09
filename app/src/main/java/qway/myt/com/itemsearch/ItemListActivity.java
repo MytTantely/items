@@ -1,38 +1,27 @@
 package qway.myt.com.itemsearch;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 //import android.support.v7.app.ActionBarActivity;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import qway.myt.com.itemsearch.model.FruitAdapter;
 import qway.myt.com.itemsearch.model.ItemClient;
 import qway.myt.com.itemsearch.model.sample.ItemSample;
 import qway.myt.com.itemsearch.model.sample.ItemSampleFactory;
-import qway.myt.com.itemsearch.utils.RecyclerItemListener;
 
 public class ItemListActivity extends AppCompatActivity {
 
@@ -86,6 +75,7 @@ public class ItemListActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.getMenu().getItem(1).setEnabled(false);
 
     }
 
@@ -96,8 +86,8 @@ public class ItemListActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment;
             switch (item.getItemId()) {
-                case R.id.navigation_shop:
-                    toolbar.setTitle("Shop");
+                case R.id.navigation_search:
+                    toolbar.setTitle("Search");
                     return true;
                 case R.id.navigation_gifts:
                     toolbar.setTitle("My Gifts");

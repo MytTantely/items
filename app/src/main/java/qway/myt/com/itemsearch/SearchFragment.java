@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -38,6 +39,8 @@ public class SearchFragment extends Fragment {
 
     private FruitAdapter mFruitAdapter;
 
+    BottomNavigationView navigation;
+
 //    private ProgressBar progress;
 
 
@@ -60,6 +63,8 @@ public class SearchFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(v.getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
+
+        navigation = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
 
         return v;
 
@@ -125,6 +130,7 @@ public class SearchFragment extends Fragment {
         // progress.setVisibility(ProgressBar.VISIBLE);
 
         // progress.setVisibility(ProgressBar.GONE);
+        navigation.getMenu().getItem(1).setEnabled(true);
 
         final ArrayList<ItemSample> fruits = ItemSampleFactory.getInstance().getItems();
         mFruitAdapter = new FruitAdapter(fruits);

@@ -39,7 +39,10 @@ public class SearchFragment extends Fragment {
 
     private FruitAdapter mFruitAdapter;
 
-    BottomNavigationView navigation;
+    private BottomNavigationView navigation;
+
+    private List shoppingList;
+
 
 //    private ProgressBar progress;
 
@@ -47,6 +50,8 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        shoppingList = new ArrayList<ItemSample>();
     }
 
     @Nullable
@@ -130,7 +135,6 @@ public class SearchFragment extends Fragment {
         // progress.setVisibility(ProgressBar.VISIBLE);
 
         // progress.setVisibility(ProgressBar.GONE);
-        navigation.getMenu().getItem(1).setEnabled(true);
 
         final ArrayList<ItemSample> fruits = ItemSampleFactory.getInstance().getItems();
         mFruitAdapter = new FruitAdapter(fruits);
@@ -149,10 +153,13 @@ public class SearchFragment extends Fragment {
                         TextView label = v.findViewById(R.id.txtLabel);
                         label.setText("Added");
 
-                        //shoppingList.add(getFruits().get(position));
+                        shoppingList.add(getFruits().get(position));
 
-                        //Toast toast = Toast.makeText(v.getContext(), "Shopping list: " + shoppingList.size(), Toast.LENGTH_LONG);
-                        //toast.show();
+                        Toast toast = Toast.makeText(v.getContext(), "Shopping list: " + shoppingList.size(), Toast.LENGTH_LONG);
+                        toast.show();
+
+                        // Enable Shopping Cart menu
+                        navigation.getMenu().getItem(1).setEnabled(true);
                     }
 
                     public void onLongClickItem(View v, int position) {

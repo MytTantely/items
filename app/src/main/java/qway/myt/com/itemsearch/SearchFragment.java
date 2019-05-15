@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,7 +32,7 @@ import qway.myt.com.itemsearch.model.sample.ItemSample;
 import qway.myt.com.itemsearch.model.sample.ItemSampleFactory;
 import qway.myt.com.itemsearch.utils.RecyclerItemListener;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements EditNameDialogFragment.EditNameDialogListener {
     private RecyclerView recList;
 
     private SearchView.SearchAutoComplete mSearchAutoComplete;
@@ -155,6 +156,8 @@ public class SearchFragment extends Fragment {
 
                         shoppingList.add(getFruits().get(position));
 
+                        showEditDialog();
+
                         Toast toast = Toast.makeText(v.getContext(), "Shopping list: " + shoppingList.size(), Toast.LENGTH_LONG);
                         toast.show();
 
@@ -180,5 +183,22 @@ public class SearchFragment extends Fragment {
     private List<ItemSample> getFruits() {
         return ItemSampleFactory.getInstance().getItems();
     }
+
+    private void showEditDialog() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance("Some Title");
+        // SETS the target fragment for use later when sending results
+        editNameDialogFragment.setTargetFragment(SearchFragment.this, 300);
+        editNameDialogFragment.show(fm, "fragment_edit_name");
+
+    }
+
+    // This is called when the dialog is completed and the results have been passed
+    @Override
+    public void onFinishEditDialog(String inputText) {
+        Toast toast = Toast.makeText(getContext(), inputText, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
 
 }

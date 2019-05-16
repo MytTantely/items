@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class EditNameDialogFragment extends DialogFragment {
 
     private EditText mEditText;
+    private Button mButtonDialogFragment;
 
     public EditNameDialogFragment() {
         // Empty constructor is required for DialogFragment
@@ -45,6 +47,14 @@ public class EditNameDialogFragment extends DialogFragment {
         mEditText.requestFocus();
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        mButtonDialogFragment = (Button)view.findViewById(R.id.buttonDialogFragment);
+        mButtonDialogFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
     }
 
     // Defines the listener interface

@@ -9,11 +9,15 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class EditNameDialogFragment extends DialogFragment {
 
     private EditText mEditText;
+    private TextView mLabel;
     private Button mButtonDialogFragment;
+    private int fruitPosition;
+    private String unit = "lb";
 
     public EditNameDialogFragment() {
         // Empty constructor is required for DialogFragment
@@ -21,10 +25,11 @@ public class EditNameDialogFragment extends DialogFragment {
         // Use `newInstance` instead as shown below
     }
 
-    public static EditNameDialogFragment newInstance(String title) {
+    public static EditNameDialogFragment newInstance(int pos, String title) {
         EditNameDialogFragment frag = new EditNameDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
+        args.putInt("pos", pos);
         frag.setArguments(args);
         return frag;
     }
@@ -40,8 +45,13 @@ public class EditNameDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
         mEditText = (EditText) view.findViewById(R.id.txt_your_name);
+        mLabel =(TextView) view.findViewById(R.id.lbl_your_name);
         // Fetch arguments from bundle and set title
         String title = getArguments().getString("title", "Enter Name");
+        fruitPosition = getArguments().getInt("pos");
+
+        mLabel.setText(title);
+
         getDialog().setTitle(title);
         // Show soft keyboard automatically and request focus to field
         mEditText.requestFocus();
@@ -52,21 +62,21 @@ public class EditNameDialogFragment extends DialogFragment {
         mButtonDialogFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                sendBackResult();
             }
         });
     }
 
     // Defines the listener interface
     public interface EditNameDialogListener {
-        void onFinishEditDialog(String inputText);
+        void onFinishEditDialog(int index, int quantity, String unit);
     }
 
     // Call this method to send the data back to the parent fragment
     public void sendBackResult() {
         // Notice the use of `getTargetFragment` which will be set when the dialog is displayed
         EditNameDialogListener listener = (EditNameDialogListener) getTargetFragment();
-        listener.onFinishEditDialog(mEditText.getText().toString());
+        listener.onFinishEditDialog(fruitPosition, Integer.parseInt(String.valueOf(mEditText.getText())), unit);
         dismiss();
     }
 

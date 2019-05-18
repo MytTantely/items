@@ -12,6 +12,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -156,7 +158,7 @@ public class SearchFragment extends Fragment implements EditNameDialogFragment.E
 
                         shoppingList.add(getFruits().get(position));
 
-                        showEditDialog();
+                        showEditDialog(position, getFruits().get(position).getLabel());
 
                         Toast toast = Toast.makeText(v.getContext(), "Shopping list: " + shoppingList.size(), Toast.LENGTH_LONG);
                         toast.show();
@@ -184,20 +186,24 @@ public class SearchFragment extends Fragment implements EditNameDialogFragment.E
         return ItemSampleFactory.getInstance().getItems();
     }
 
-    private void showEditDialog() {
+    private void showEditDialog(int position, String label) {
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance("Some Title");
+        EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance(position, label);
         // SETS the target fragment for use later when sending results
-        editNameDialogFragment.setTargetFragment(SearchFragment.this, 300);
+        editNameDialogFragment.setTargetFragment(SearchFragment.this, 600); //300
         editNameDialogFragment.show(fm, "fragment_edit_name");
 
     }
 
     // This is called when the dialog is completed and the results have been passed
+    // Will add in shopping cart the fruit with the quantity
     @Override
-    public void onFinishEditDialog(String inputText) {
-        Toast toast = Toast.makeText(getContext(), inputText, Toast.LENGTH_LONG);
+    public void onFinishEditDialog(int pos, int quantity, String unit) {
+        Toast toast = Toast.makeText(getContext(), "pos: " + pos + " - quantity: " + quantity +" - unit: " + unit, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
+        String msg = "pos: " + pos + " - quantity: " + quantity +" - unit: " + unit;
+        Log.i("###",  msg);
     }
 
 

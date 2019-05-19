@@ -32,6 +32,7 @@ import java.util.List;
 import qway.myt.com.itemsearch.model.FruitAdapter;
 import qway.myt.com.itemsearch.model.sample.ItemSample;
 import qway.myt.com.itemsearch.model.sample.ItemSampleFactory;
+import qway.myt.com.itemsearch.model.selected.SelectedItemSample;
 import qway.myt.com.itemsearch.utils.RecyclerItemListener;
 
 public class SearchFragment extends Fragment implements EditNameDialogFragment.EditNameDialogListener {
@@ -44,7 +45,8 @@ public class SearchFragment extends Fragment implements EditNameDialogFragment.E
 
     private BottomNavigationView navigation;
 
-    private List shoppingList;
+    //    private List shoppingList;
+    private List selectedItems;
 
 
 //    private ProgressBar progress;
@@ -54,7 +56,8 @@ public class SearchFragment extends Fragment implements EditNameDialogFragment.E
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        shoppingList = new ArrayList<ItemSample>();
+//        shoppingList = new ArrayList<ItemSample>();
+        selectedItems = new ArrayList<SelectedItemSample>();
     }
 
     @Nullable
@@ -156,12 +159,12 @@ public class SearchFragment extends Fragment implements EditNameDialogFragment.E
                         TextView label = v.findViewById(R.id.txtLabel);
                         label.setText("Added");
 
-                        shoppingList.add(getFruits().get(position));
+//                        shoppingList.add(getFruits().get(position));
 
                         showEditDialog(position, getFruits().get(position).getLabel());
 
-                        Toast toast = Toast.makeText(v.getContext(), "Shopping list: " + shoppingList.size(), Toast.LENGTH_LONG);
-                        toast.show();
+//                        Toast toast = Toast.makeText(v.getContext(), "Shopping list: " + shoppingList.size(), Toast.LENGTH_LONG);
+//                        toast.show();
 
                         // Enable Shopping Cart menu
                         navigation.getMenu().getItem(1).setEnabled(true);
@@ -199,11 +202,14 @@ public class SearchFragment extends Fragment implements EditNameDialogFragment.E
     // Will add in shopping cart the fruit with the quantity
     @Override
     public void onFinishEditDialog(int pos, int quantity, String unit) {
-        Toast toast = Toast.makeText(getContext(), "pos: " + pos + " - quantity: " + quantity +" - unit: " + unit, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
-        String msg = "pos: " + pos + " - quantity: " + quantity +" - unit: " + unit;
-        Log.i("###",  msg);
+//        Toast toast = Toast.makeText(getContext(), "pos: " + pos + " - quantity: " + quantity +" - unit: " + unit, Toast.LENGTH_LONG);
+//        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+//        toast.show();
+//        String msg = "pos: " + pos + " - quantity: " + quantity +" - unit: " + unit;
+//        Log.i("###",  msg);
+        selectedItems.add(new SelectedItemSample(String.valueOf(pos), getFruits().get(pos), quantity, unit));
+        SelectedItemSample sItem = (SelectedItemSample) selectedItems.get(selectedItems.size() - 1);
+        Log.i("### ", sItem.getRef() + " - " + sItem.getItem().getLabel() + " " + sItem.getQuantity() + sItem.getUnit());
     }
 
 

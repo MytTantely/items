@@ -1,10 +1,25 @@
 package qway.myt.com.itemsearch.model.sample;
 
-public class ItemSample {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ItemSample implements Parcelable {
     private String name;
     private String category;
     private Double price;
     private String label;
+
+    public static final Creator<ItemSample> CREATOR = new Creator<ItemSample>() {
+        @Override
+        public ItemSample createFromParcel(Parcel in) {
+            return new ItemSample(in);
+        }
+
+        @Override
+        public ItemSample[] newArray(int size) {
+            return new ItemSample[size];
+        }
+    };
 
     private void setLabel(String category, String name){
         this.label = category + " - " + name;
@@ -61,5 +76,31 @@ public class ItemSample {
         this.price = price;
         this.onSale = onSale;
         this.setLabel(this.category, this.name);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(category);
+        if (price == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(price);
+        }
+        dest.writeString(label);
+    }
+
+    // Parcelling part
+    public ItemSample(Parcel in){
+        this.name = in.readString();
+        this.category = in.readString();
+        this.price = in.readDouble();
+        this.label = in.readString();
     }
 }

@@ -1,12 +1,33 @@
 package qway.myt.com.itemsearch.model.selected;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import qway.myt.com.itemsearch.model.sample.ItemSample;
 
-public class SelectedItemSample {
+public class SelectedItemSample implements Parcelable {
     private ItemSample item;
     private int quantity;
     private String unit;
     private String ref;
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public SelectedItemSample createFromParcel(Parcel in) {
+            return new SelectedItemSample(in);
+        }
+
+        public SelectedItemSample[] newArray(int size) {
+            return new SelectedItemSample[size];
+        }
+    };
+
+    // Parcelling part
+    public SelectedItemSample(Parcel in){
+        this.item = in.readParcelable(ItemSample.class.getClassLoader());
+        this.quantity = in.readInt();
+        this.unit =  in.readString();
+        this.ref = in.readString();
+    }
 
     public ItemSample getItem() {
         return item;
@@ -51,5 +72,15 @@ public class SelectedItemSample {
         this.item = item;
         this.quantity = qty;
         this.unit = unit;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }

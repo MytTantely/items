@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -88,13 +89,18 @@ public class ItemListActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_search:
                     toolbar.setTitle("Search");
+                    fragment = new SearchFragment();
+                    loadFragment(fragment);
+                    return true;
+                case R.id.navigation_cart:
+                    toolbar.setTitle("Cart");
+                    fragment = new ShoppingListFragment();
+                    loadFragment(fragment);
                     return true;
                 case R.id.navigation_gifts:
                     toolbar.setTitle("My Gifts");
                     return true;
-                case R.id.navigation_cart:
-                    toolbar.setTitle("Cart");
-                    return true;
+
                 case R.id.navigation_profile:
                     toolbar.setTitle("Profile");
                     return true;
@@ -102,6 +108,14 @@ public class ItemListActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
     private List<ItemSample> getFruits() {
         return ItemSampleFactory.getInstance().getItems();

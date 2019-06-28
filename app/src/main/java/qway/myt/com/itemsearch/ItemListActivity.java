@@ -23,6 +23,7 @@ import java.util.List;
 import qway.myt.com.itemsearch.model.ItemClient;
 import qway.myt.com.itemsearch.model.sample.ItemSample;
 import qway.myt.com.itemsearch.model.sample.ItemSampleFactory;
+import qway.myt.com.itemsearch.model.selected.SelectedItemSample;
 
 public class ItemListActivity extends AppCompatActivity {
 
@@ -43,12 +44,19 @@ public class ItemListActivity extends AppCompatActivity {
 
     private ActionBar toolbar;
 
+    //    private List shoppingList;
+    private List selectedItems;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
         shoppingList = new ArrayList<ItemSample>();
+
+        selectedItems = new ArrayList<SelectedItemSample>();
+
 
 //        recList = (RecyclerView) findViewById(R.id.cardList);
 //        recList.setHasFixedSize(true);

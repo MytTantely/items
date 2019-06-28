@@ -45,8 +45,7 @@ public class SearchFragment extends Fragment implements EditNameDialogFragment.E
 
     private BottomNavigationView navigation;
 
-    //    private List shoppingList;
-    private List selectedItems;
+
 
 
 //    private ProgressBar progress;
@@ -57,7 +56,6 @@ public class SearchFragment extends Fragment implements EditNameDialogFragment.E
         super.onCreate(savedInstanceState);
 
 //        shoppingList = new ArrayList<ItemSample>();
-        selectedItems = new ArrayList<SelectedItemSample>();
     }
 
     @Nullable
